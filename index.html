@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Compras</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f8ff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #f3f8ff;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+
+        .logo img {
+            max-height: 200px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a, nav ul li button {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: transparent;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            white-space: nowrap;
+        }
+
+        nav ul li a:hover, nav ul li button:hover {
+            background-color: #e0e7ff;
+            border-color: #007bff;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .produtos {
+            text-align: center;
+        }
+
+        .galeria-produtos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .produto {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 20px);
+            box-sizing: border-box;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .produto img {
+            max-width: 100%;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .produto h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .produto p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .produto .preco {
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .produto:hover {
+            transform: translateY(-10px);
+        }
+
+        .botao {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        .botao:hover {
+            background-color: #0056b3;
+        }
+
+        .descricao-link {
+            color: #4caf50;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .botao-pagamento {
+            background-color: #28a745;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .botao-pagamento:hover {
+            background-color: #218838;
+        }
+
+        .alert {
+            display: none;
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        footer {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 0px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .produto {
+                width: 100%;
+            }
+            .galeria-produtos {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/StudyTask-ai/Logotipo/refs/heads/main/LogoMakerCa-1731034983977.png" alt="Logotipo do Site">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><button onclick="mostrarCarrinho()">Carrinho</button></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="produtos" id="produtos">
+            <h1>Nossos Produtos</h1>
+            <div class="galeria-produtos">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Anne%2016%2C99%20RS.jpg" alt="Linha Anne">
+                    <h2>Linha Anne</h2>
+                    <span class="descricao-link" onclick="mostrarDescricao('desc1')">Ver Descrição</span>
+                    <p id="desc1" style="display:none;">Linha Anne é resistente e de ótima qualidade, perfeita para seus projetos.</p>
+                    <p class="preco">R$ 16,99</p>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Anne')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="mostrarEndereco('Linha Anne')">Comprar</button>
+                </div>
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Charme%2016%2C99%20RS.jpg" alt="Linha Charme">
+                    <h2>Linha Charme</h2>
+                    <span class="descricao-link" onclick="mostrarDescricao('desc2')">Ver Descrição</span>
+                    <p id="desc2" style="display:none;">Linha Charme oferece resistência e qualidade excepcional para suas criações.</p>
+                    <p class="preco">R$ 16,99</p>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Charme')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="mostrarEndereco('Linha Charme')">Comprar</button>
+                </div>
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Duna%2014%2C99%20RS.jpg" alt="Linha Duna">
+                    <h2>Linha Duna</h2>
+                    <span class="descricao-link" onclick="mostrarDescricao('desc3')">Ver Descrição</span>
+                    <p id="desc3" style="display:none;">Linha Duna é conhecida por sua resistência e qualidade superior.</p>
+                    <p class="preco">R$ 14,99</p>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Duna')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="mostrarEndereco('Linha Duna')">Comprar</button>
+                </div>
+                <!-- Produto 4 -->
+                <div class="produto">
+                    <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Harmony%2015%20RS.png" alt="Linha Harmony">
+                    <h2>Linha Harmony</h2>
+                    <span class="descricao-link" onclick="mostrarDescricao('desc4')">Ver Descrição</span>
+                    <p id="desc4" style="display:none;">Linha Harmony combina resistência com qualidade superior, ideal para qualquer projeto.</p>
+                    <p class="preco">R$ 15,00</p>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Harmony')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="mostrarEndereco('Linha Harmony')">Comprar</button>
+                </div>
+                <!-- Produto 5 -->
+                <div class="produto">
+                    <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Princesa%2014%2C99%20Promo%C3%A7%C3%A3o%20Imperdivel.jpg" alt="Linha Princesa">
+                    <h2>Linha Princesa</h2>
+                    <span class="descricao-link" onclick="mostrarDescricao('desc5')">Ver Descrição</span>
+                    <p id="desc5" style="display:none;">Linha Princesa é resistente e de alta qualidade, com uma promoção imperdível.</p>
+                    <p class="preco">R$ 14,99</p>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Princesa')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="mostrarEndereco('Linha Princesa')">Comprar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Endereço -->
+    <div id="modalEndereco" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalEndereco()">&times;</span>
+            <h2>Digite seu Endereço</h2>
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" placeholder="Rua, Número, Bairro, Cidade">
+            </div>
+            <button class="botao-pagamento" onclick="calcularFrete()">Calcular Frete</button>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento -->
+    <div id="modalPagamento" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalPagamento()">&times;</span>
+            <h2>Pagamento</h2>
+            <div class="form-group">
+                <label for="cartao">Número do Cartão</label>
+                <input type="text" id="cartao" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="form-group">
+                <label for="validade">Validade</label>
+                <input type="text" id="validade" placeholder="MM/AA">
+            </div>
+            <div class="form-group">
+                <label for="codigo">Código de Segurança</label>
+                <input type="text" id="codigo" placeholder="123">
+            </div>
+            <button class="botao-pagamento" onclick="finalizarCompra()">Finalizar Compra</button>
+            <button class="botao-pagamento" onclick="mostrarPix()">Pagar com Pix</button>
+        </div>
+    </div>
+
+    <!-- Modal de Pix -->
+    <div id="modalPix" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalPix()">&times;</span>
+            <h2>Pagamento com Pix</h2>
+            <p>Escaneie o QR Code abaixo para pagar com Pix.</p>
+            <img src="https://via.placeholder.com/150" alt="QR Code">
+        </div>
+    </div>
+
+    <!-- Modal de Carrinho -->
+    <div id="modalCarrinho" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalCarrinho()">&times;</span>
+            <h2>Seu Carrinho</h2>
+            <ul id="listaCarrinho"></ul>
+        </div>
+    </div>
+
+    <!-- Alerta de Adição ao Carrinho -->
+    <div id="alertCarrinho" class="alert">
+        <span id="alertTexto"></span>
+    </div>
+
+    <footer>
+        <p>© 2024 Site de Compras.</p>
+    </footer>
+
+    <script>
+        // Função para mostrar descrição do produto
+        function mostrarDescricao(id) {
+            var desc = document.getElementById(id);
+            if (desc.style.display === "none") {
+                desc.style.display = "block";
+            } else {
+                desc.style.display = "none";
+            }
+        }
+
+        // Função para simular a adição do produto ao carrinho
+        function adicionarAoCarrinho(produto) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            carrinho.push(produto);
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+            // Mostrar alerta
+            document.getElementById('alertTexto').innerText = produto + " foi adicionado ao carrinho.";
+            document.getElementById('alertCarrinho').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('alertCarrinho').style.display = 'none';
+            }, 3000);
+        }
+
+        // Função para mostrar o carrinho
+        function mostrarCarrinho() {
+            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const listaCarrinho = document.getElementById('listaCarrinho');
+            listaCarrinho.innerHTML = carrinho.map(item => `<li>${item}</li>`).join('');
+            document.getElementById('modalCarrinho').style.display = 'flex';
+        }
+
+        // Função para fechar modal do carrinho
+        function fecharModalCarrinho() {
+            document.getElementById('modalCarrinho').style.display = 'none';
+        }
+
+        // Função para mostrar modal de endereço
+        function mostrarEndereco(produto) {
+            document.getElementById('modalEndereco').style.display = 'flex';
+            sessionStorage.setItem('produtoSelecionado', produto);
+        }
+
+        // Função para fechar modal de endereço
+        function fecharModalEndereco() {
+            document.getElementById('modalEndereco').style.display = 'none';
+        }
+
+        // Função para calcular frete (sempre grátis)
+        function calcularFrete() {
+            alert("Frete calculado: Grátis para qualquer endereço.");
+            fecharModalEndereco();
+            mostrarPagamento();
+        }
+
+        // Função para mostrar a interface de pagamento
+        function mostrarPagamento() {
+            document.getElementById('modalPagamento').style.display = 'flex';
+        }
+
+        // Função para fechar modal de pagamento
+        function fecharModalPagamento() {
+            document.getElementById('modalPagamento').style.display = 'none';
+        }
+
+        // Função para mostrar a interface de pagamento com Pix
+        function mostrarPix() {
+            fecharModalPagamento();
+            document.getElementById('modalPix').style.display = 'flex';
+        }
+
+        // Função para fechar modal de Pix
+        function fecharModalPix() {
+            document.getElementById('modalPix').style.display = 'none';
+        }
+
+        // Função para finalizar a compra
+        function finalizarCompra() {
+            fecharModalPagamento();
+            const produto = sessionStorage.getItem('produtoSelecionado');
+            alert(produto + " comprado com sucesso!");
+        }
+    </script>
+</body>
+</html>
