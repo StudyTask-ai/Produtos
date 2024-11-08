@@ -39,7 +39,7 @@
 
         nav {
             display: none;
-            background-color:  #000000 ;
+            background-color: #000000;
             padding: 10px;
             position: absolute;
             top: 60px;
@@ -121,23 +121,25 @@
             transform: translateY(-10px);
         }
 
-        .botao {
+        .botao, .botao-pagamento {
             display: block;
             margin: 10px auto;
             padding: 15px;
             background-color: #007bff;
             color: #fff;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
             cursor: pointer;
             width: 90%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .botao:hover {
+        .botao:hover, .botao-pagamento:hover {
             background-color: #0056b3;
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
         }
 
         .descricao-link {
@@ -169,6 +171,7 @@
             width: 90%;
             max-width: 400px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         .close {
@@ -203,17 +206,6 @@
             box-sizing: border-box;
         }
 
-        .botao-pagamento {
-            background-color: #28a745;
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .botao-pagamento:hover {
-            background-color: #218838;
-        }
-
         .alert {
             display: none;
             position: fixed;
@@ -225,6 +217,12 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         footer {
@@ -233,7 +231,7 @@
             padding: 0px;
             position: fixed;
             bottom: 0;
-width: 100%;
+            width: 100%;
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
@@ -241,7 +239,7 @@ width: 100%;
 <body>
     <header>
         <div class="logo">
-            <img src="https://raw.githubusercontent.com/StudyTask-ai/Logotipo/refs/heads/main/LogoMakerCa-1731034983977.png" alt="Logotipo da Loja">
+            <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/1000078125-removebg-preview.png" alt="Logotipo da Loja">
         </div>
         <div class="menu" onclick="toggleMenu()">☰</div>
     </header>
@@ -265,7 +263,7 @@ width: 100%;
                     <span class="descricao-link" onclick="mostrarDescricao('desc1')">Ver Descrição</span>
                     <p id="desc1" style="display:none;">Linha Anne é resistente e de ótima qualidade, perfeita para seus projetos.</p>
                     <p class="preco">R$ 16,99</p>
-                    <button class="botao" onclick="adicionarAoCarrinho('Linha Anne')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Anne', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Anne%2016%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
                     <button class="botao" onclick="mostrarEndereco('Linha Anne')">Comprar</button>
                 </div>
                 <!-- Produto 2 -->
@@ -275,7 +273,7 @@ width: 100%;
                     <span class="descricao-link" onclick="mostrarDescricao('desc2')">Ver Descrição</span>
                     <p id="desc2" style="display:none;">Linha Charme oferece resistência e qualidade excepcional para suas criações.</p>
                     <p class="preco">R$ 16,99</p>
-                    <button class="botao" onclick="adicionarAoCarrinho('Linha Charme')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Charme', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Charme%2016%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
                     <button class="botao" onclick="mostrarEndereco('Linha Charme')">Comprar</button>
                 </div>
                 <!-- Produto 3 -->
@@ -285,7 +283,7 @@ width: 100%;
                     <span class="descricao-link" onclick="mostrarDescricao('desc3')">Ver Descrição</span>
                     <p id="desc3" style="display:none;">Linha Duna é conhecida por sua resistência e qualidade superior.</p>
                     <p class="preco">R$ 14,99</p>
-                    <button class="botao" onclick="adicionarAoCarrinho('Linha Duna')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Duna', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Duna%2014%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
                     <button class="botao" onclick="mostrarEndereco('Linha Duna')">Comprar</button>
                 </div>
                 <!-- Produto 4 -->
@@ -295,7 +293,7 @@ width: 100%;
                     <span class="descricao-link" onclick="mostrarDescricao('desc4')">Ver Descrição</span>
                     <p id="desc4" style="display:none;">Linha Harmony combina resistência com qualidade superior, ideal para qualquer projeto.</p>
                     <p class="preco">R$ 15,00</p>
-                    <button class="botao" onclick="adicionarAoCarrinho('Linha Harmony')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Harmony', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Harmony%2015%20RS.png')">Adicionar ao Carrinho</button>
                     <button class="botao" onclick="mostrarEndereco('Linha Harmony')">Comprar</button>
                 </div>
                 <!-- Produto 5 -->
@@ -305,7 +303,7 @@ width: 100%;
                     <span class="descricao-link" onclick="mostrarDescricao('desc5')">Ver Descrição</span>
                     <p id="desc5" style="display:none;">Linha Princesa é resistente e de alta qualidade, com uma promoção imperdível.</p>
                     <p class="preco">R$ 14,99</p>
-                    <button class="botao" onclick="adicionarAoCarrinho('Linha Princesa')">Adicionar ao Carrinho</button>
+                    <button class="botao" onclick="adicionarAoCarrinho('Linha Princesa', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Princesa%2014%2C99%20Promo%C3%A7%C3%A3o%20Imperdivel.jpg')">Adicionar ao Carrinho</button>
                     <button class="botao" onclick="mostrarEndereco('Linha Princesa')">Comprar</button>
                 </div>
             </div>
@@ -381,7 +379,6 @@ width: 100%;
             nav.style.display = nav.style.display === "block" ? "none" : "block";
         }
 
-        // Função para mostrar descrição do produto
         function mostrarDescricao(id) {
             var desc = document.getElementById(id);
             if (desc.style.display === "none") {
@@ -391,13 +388,11 @@ width: 100%;
             }
         }
 
-        // Função para simular a adição do produto ao carrinho
-        function adicionarAoCarrinho(produto) {
+        function adicionarAoCarrinho(produto, imagemUrl) {
             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-            carrinho.push(produto);
+            carrinho.push({ nome: produto, imagem: imagemUrl });
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
 
-            // Mostrar alerta
             document.getElementById('alertTexto').innerText = produto + " foi adicionado ao carrinho.";
             document.getElementById('alertCarrinho').style.display = 'block';
             setTimeout(() => {
@@ -405,59 +400,54 @@ width: 100%;
             }, 3000);
         }
 
-        // Função para mostrar o carrinho
         function mostrarCarrinho() {
             const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
             const listaCarrinho = document.getElementById('listaCarrinho');
-            listaCarrinho.innerHTML = carrinho.map(item => `<li>${item}</li>`).join('');
+            listaCarrinho.innerHTML = carrinho.map(item => `
+                <li>
+                    <img src="${item.imagem}" alt="${item.nome}" style="width: 50px; height: auto; vertical-align: middle; margin-right: 10px;">
+                    ${item.nome}
+                </li>
+            `).join('');
             document.getElementById('modalCarrinho').style.display = 'flex';
         }
 
-        // Função para fechar modal do carrinho
         function fecharModalCarrinho() {
             document.getElementById('modalCarrinho').style.display = 'none';
         }
 
-        // Função para mostrar modal de endereço
         function mostrarEndereco(produto) {
             document.getElementById('modalEndereco').style.display = 'flex';
             sessionStorage.setItem('produtoSelecionado', produto);
         }
 
-        // Função para fechar modal de endereço
         function fecharModalEndereco() {
             document.getElementById('modalEndereco').style.display = 'none';
         }
 
-        // Função para calcular frete (sempre grátis)
         function calcularFrete() {
             alert("Frete calculado: Grátis para qualquer endereço.");
             fecharModalEndereco();
             mostrarPagamento();
         }
 
-        // Função para mostrar a interface de pagamento
         function mostrarPagamento() {
             document.getElementById('modalPagamento').style.display = 'flex';
         }
 
-        // Função para fechar modal de pagamento
         function fecharModalPagamento() {
             document.getElementById('modalPagamento').style.display = 'none';
         }
 
-        // Função para mostrar a interface de pagamento com Pix
         function mostrarPix() {
             fecharModalPagamento();
             document.getElementById('modalPix').style.display = 'flex';
         }
 
-        // Função para fechar modal de Pix
         function fecharModalPix() {
             document.getElementById('modalPix').style.display = 'none';
         }
 
-        // Função para finalizar a compra
         function finalizarCompra() {
             fecharModalPagamento();
             const produto = sessionStorage.getItem('produtoSelecionado');
