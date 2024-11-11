@@ -142,6 +142,11 @@
             box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
         }
 
+        .botao:active, .botao-pagamento:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
         .descricao-link {
             color: #4caf50;
             cursor: pointer;
@@ -172,6 +177,7 @@
             max-width: 400px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             position: relative;
+            text-align: center;
         }
 
         .close {
@@ -186,24 +192,6 @@
             color: #000;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
         }
 
         .alert {
@@ -364,9 +352,24 @@
         </div>
     </div>
 
-    <!-- Alerta de Adição ao Carrinho -->
-    <div id="alertCarrinho" class="alert">
-        <span id="alertTexto"></span>
+    <!-- Modal de Frete -->
+    <div id="modalFrete" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalFrete()">&times;</span>
+            <h2>Frete Grátis</h2>
+            <p>Frete grátis para sua região!</p>
+            <button class="botao" onclick="fecharModalFrete()">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal de Compra Finalizada -->
+    <div id="modalCompraFinalizada" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalCompraFinalizada()">&times;</span>
+            <h2>Compra Finalizada</h2>
+            <p>Compra finalizada com sucesso!</p>
+            <button class="botao" onclick="fecharModalCompraFinalizada()">OK</button>
+        </div>
     </div>
 
     <footer>
@@ -426,8 +429,12 @@
         }
 
         function calcularFrete() {
-            alert("Frete calculado: Grátis para qualquer endereço.");
             fecharModalEndereco();
+            document.getElementById('modalFrete').style.display = 'flex';
+        }
+
+        function fecharModalFrete() {
+            document.getElementById('modalFrete').style.display = 'none';
             mostrarPagamento();
         }
 
@@ -450,8 +457,11 @@
 
         function finalizarCompra() {
             fecharModalPagamento();
-            const produto = sessionStorage.getItem('produtoSelecionado');
-            alert(produto + " comprado com sucesso!");
+            document.getElementById('modalCompraFinalizada').style.display = 'flex';
+        }
+
+        function fecharModalCompraFinalizada() {
+            document.getElementById('modalCompraFinalizada').style.display = 'none';
         }
     </script>
 </body>
