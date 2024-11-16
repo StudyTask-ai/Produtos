@@ -4,64 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Paleta de Cores */
+        :root {
+            --primary-color: #009ee3; /* Azul Mercado Pago */
+            --secondary-color: #ffffff;
+            --text-color: #333333;
+            --hover-color: #007bbd;
+        }
+
+        /* Fontes e Estilo Global */
         * {
             box-sizing: border-box;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f3f8ff;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             overflow-x: hidden;
         }
 
         header {
-            background-color: #f3f8ff;
-            padding: 20px;
+            background-color: var(--primary-color);
+            padding: 10px 20px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: var(--secondary-color);
         }
 
         .logo img {
-            max-height: 300px;
-            max-width: 300%;
-        }
-
-        .menu {
-            font-size: 24px;
-            color: black;
-            cursor: pointer;
+            max-height: 70px; /* Aumentar o tamanho do logotipo */
         }
 
         nav {
-            display: none;
-            background-color: #000000;
-            padding: 10px;
-            position: absolute;
-            top: 60px;
-            right: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 20px;
         }
 
         nav ul {
             list-style: none;
+            display: flex;
+            gap: 20px;
             margin: 0;
             padding: 0;
         }
 
         nav ul li {
-            margin: 10px 0;
+            margin: 0;
         }
 
-        nav ul li a {
+        nav ul li a, nav ul li button {
             text-decoration: none;
-            color: white;
+            color: var(--secondary-color);
             font-weight: bold;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        nav ul li button {
+            padding: 0;
         }
 
         main {
@@ -81,14 +89,14 @@
         }
 
         .produto {
-            background-color: #ffffff;
+            background-color: var(--secondary-color);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 400px;
             box-sizing: border-box;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             margin: 0 auto;
         }
@@ -101,7 +109,7 @@
 
         .produto h2 {
             font-size: 18px;
-            color: #333;
+            color: var(--text-color);
             margin-bottom: 5px;
         }
 
@@ -114,31 +122,32 @@
         .produto .preco {
             font-size: 16px;
             font-weight: bold;
-            color: #000;
+            color: var(--text-color);
         }
 
         .produto:hover {
             transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .botao, .botao-pagamento {
             display: block;
             margin: 10px auto;
             padding: 15px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             text-align: center;
             border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s, box-shadow 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
             cursor: pointer;
             width: 90%;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         .botao:hover, .botao-pagamento:hover {
-            background-color: #0056b3;
+            background-color: var(--hover-color);
             box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
         }
 
@@ -170,7 +179,7 @@
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: var(--secondary-color);
             padding: 20px;
             border-radius: 8px;
             width: 90%;
@@ -178,34 +187,21 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             position: relative;
             text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .close {
-            color: #aaa;
+            color: var(--text-color);
             float: right;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .close:hover,
         .close:focus {
             color: #000;
             text-decoration: none;
-            cursor: pointer;
-        }
-
-        .alert {
-            display: none;
-            position: fixed;
-            top: 10%;
-            right: 10%;
-            background-color: #4caf50;
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
         @keyframes fadeIn {
@@ -214,13 +210,20 @@
         }
 
         footer {
-            background-color: #ffffff;
+            background-color: var(--secondary-color);
             text-align: center;
-            padding: 0px;
+            padding: 10px;
             position: fixed;
             bottom: 0;
             width: 100%;
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -229,16 +232,14 @@
         <div class="logo">
             <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/1000078125-removebg-preview.png" alt="Logotipo da Loja">
         </div>
-        <div class="menu" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><button onclick="mostrarCarrinho()">Carrinho</button></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
     </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#produtos">Produtos</a></li>
-            <li><button onclick="mostrarCarrinho()">Carrinho</button></li>
-            <li><a href="#">Contato</a></li>
-        </ul>
-    </nav>
     
     <main>
         <section class="produtos" id="produtos">
@@ -377,11 +378,6 @@
     </footer>
 
     <script>
-        function toggleMenu() {
-            var nav = document.querySelector("nav");
-            nav.style.display = nav.style.display === "block" ? "none" : "block";
-        }
-
         function mostrarDescricao(id) {
             var desc = document.getElementById(id);
             if (desc.style.display === "none") {
@@ -465,4 +461,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
